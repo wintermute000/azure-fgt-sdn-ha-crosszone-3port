@@ -1,0 +1,4 @@
+    resource_group_name  = "infra"
+    storage_account_name = "infrastoracc"
+    container_name       = "terraform-tfstate"
+    key                  = "azure-fgt-sdn-ha-crosszone-3port.tfstate"
