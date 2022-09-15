@@ -5,7 +5,7 @@ A Terraform script to deploy a FortiGate-VM Cluster on Azure using a SDN connect
 ## Introduction
 This topology is only recommended for using with FOS 7.0.5 and later which supports 3 port HA setup combining HA reserved management ports and sync into the same interfaces.
 * port1 - hamgmt/hasync with public IP
-* port2 - public/untrust
+* port2 - public/untrust with public IP
 * port3 - private/trust
 
 This terraform script supports both availability zones and availablity sets with a variable toggle.
@@ -26,11 +26,10 @@ Terraform deploys the following components:
 * 2x firewall rules - permit outbound, and permit internal.
 * Azure SDN connector using managed identity with reader and network contributor roles. The latter is utilised for SDN connector based HA failover. 
 * 2x Ubuntu 20.04 LTS test client VMs in each workload subnet.
+* UDRs for internal subnet routing table for default routing and inter-subnet routing through active FortiGate (HA is orchestrated by SDN connector)
 * Choose PAYG or BYOL in variables - if BYOL, place .lic files in subfolder "licenses" and define in variables.
 * Choose availability zone or availability set using the availability_zone boolean variable (false will use availability set).
 * Terraform backend (versions.tf) stored in Azure storage - customise backend.conf to suit or modify as appropriate. An backend.conf.example is provided. 
-
-**If BYOL is used, then the VNET summary route will not be created in FortiOS due to the limitation of unlicensed VM only allowing 3 routes. Add the VNET summary route after licensing has finished.**
 
 **If availability_zone is set to true, then region must support this feature. If availability_zone is set to false, then the deployment will be performed using an availability set with 2 domains.**
 
