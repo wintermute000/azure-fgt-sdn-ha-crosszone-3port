@@ -35,7 +35,7 @@ Terraform deploys the following components:
 **If availability_zone is set to true, then region must support this feature. If availability_zone is set to false, then the deployment will be performed using an availability set with 2 domains.**
 
 Topology using default variables
-![img]()
+![img](https://github.com/wintermute000/azure-fgt-sdn-ha-crosszone-3port/blob/main/azure-fgt-sdn-ha-crosszone-3port.jpg)
 
 For a detailed walkthrough of the operation of this topology, refer to https://github.com/40net-cloud/fortinet-azure-solutions/tree/main/FortiGate/Active-Passive-SDN
 
