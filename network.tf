@@ -146,7 +146,7 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
 
 // Active FGT Network Interface port1
 resource "azurerm_network_interface" "activeport1" {
-  name                          = "activeport1"
+  name                          = "${var.activename}-port1"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   enable_accelerated_networking = var.accelerate == "true" ? true : false
@@ -164,7 +164,7 @@ resource "azurerm_network_interface" "activeport1" {
 }
 
 resource "azurerm_network_interface" "activeport2" {
-  name                          = "activeport2"
+  name                          = "${var.activename}-port2"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   enable_ip_forwarding          = true
@@ -182,7 +182,7 @@ resource "azurerm_network_interface" "activeport2" {
 }
 
 resource "azurerm_network_interface" "activeport3" {
-  name                          = "activeport3"
+  name                          = "${var.activename}-port3"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   enable_ip_forwarding          = true
@@ -219,7 +219,7 @@ resource "azurerm_network_interface_security_group_association" "port3nsg" {
 
 // Passive FGT Network Interface port1
 resource "azurerm_network_interface" "passiveport1" {
-  name                          = "passiveport1"
+  name                          = "${var.passivename}-port1"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   enable_accelerated_networking = var.accelerate == "true" ? true : false
@@ -237,7 +237,7 @@ resource "azurerm_network_interface" "passiveport1" {
 }
 
 resource "azurerm_network_interface" "passiveport2" {
-  name                          = "passiveport2"
+  name                          = "${var.passivename}-port2"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   enable_ip_forwarding          = true
@@ -254,7 +254,7 @@ resource "azurerm_network_interface" "passiveport2" {
 }
 
 resource "azurerm_network_interface" "passiveport3" {
-  name                          = "passiveport3"
+  name                          = "${var.passivename}-port3"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.myterraformgroup.name
   enable_ip_forwarding          = true

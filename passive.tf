@@ -101,7 +101,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
   }
 
   storage_os_disk {
-    name              = "passiveosDisk"
+    name              = "${var.passivename}-osDisk"
     caching           = "ReadWrite"
     managed_disk_type = "Standard_LRS"
     create_option     = "FromImage"
@@ -109,7 +109,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
 
   # Log data disks
   storage_data_disk {
-    name              = "passivedatadisk"
+    name              = "${var.passivename}-datadisk"
     managed_disk_type = "Standard_LRS"
     create_option     = "Empty"
     lun               = 0
@@ -141,6 +141,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
       adminsport      = var.adminsport
       sshport      = var.sshport
       vnetcidr = var.vnetcidr
+      port2name = "${var.passivename}-port2"
       rsg             = azurerm_resource_group.myterraformgroup.name
       clusterip       = azurerm_public_ip.ClusterPublicIP.name
       routetablename    = azurerm_route_table.private_rt.name
