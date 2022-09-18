@@ -82,66 +82,46 @@ resource "azurerm_network_security_group" "publicnetworknsg" {
   name                = "PublicNetworkSecurityGroup"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
-
-  security_rule {
-    name                       = "ingress"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                        = "egress"
-    priority                    = 100
-    direction                   = "Outbound"
-    access                      = "Allow"
-    protocol                    = "*"
-    source_port_range           = "*"
-    destination_port_range      = "*"
-    source_address_prefix       = "*"
-    destination_address_prefix  = "*"
-  }
-
-
   tags = local.common_tags
 }
 
+resource "azurerm_network_security_rule" "publicnetworknsgrules" {
+    for_each = var.publicnsg
+    name                       = each.value.name
+    priority                   = each.value.priority
+    direction                  = each.value.direction
+    access                     = each.value.access
+    protocol                   = each.value.protocol
+    source_port_range          = each.value.source_port_range
+    destination_port_range     = each.value.destination_port_range
+    source_address_prefix      = each.value.source_address_prefix
+    destination_address_prefix = each.value.destination_address_prefix
+    resource_group_name = azurerm_resource_group.myterraformgroup.name    
+    network_security_group_name = azurerm_network_security_group.publicnetworknsg.name
+}
+  
 resource "azurerm_network_security_group" "privatenetworknsg" {
   name                = "PrivateNetworkSecurityGroup"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
-
-  security_rule {
-    name                       = "ingress"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-  security_rule {
-    name                        = "egress"
-    priority                    = 100
-    direction                   = "Outbound"
-    access                      = "Allow"
-    protocol                    = "*"
-    source_port_range           = "*"
-    destination_port_range      = "*"
-    source_address_prefix       = "*"
-    destination_address_prefix  = "*"
-  }
-
   tags = local.common_tags
 }
+
+resource "azurerm_network_security_rule" "privatenetworknsgrules" {
+    for_each = var.privatensg
+    name                       = each.value.name
+    priority                   = each.value.priority
+    direction                  = each.value.direction
+    access                     = each.value.access
+    protocol                   = each.value.protocol
+    source_port_range          = each.value.source_port_range
+    destination_port_range     = each.value.destination_port_range
+    source_address_prefix      = each.value.source_address_prefix
+    destination_address_prefix = each.value.destination_address_prefix
+    resource_group_name = azurerm_resource_group.myterraformgroup.name    
+    network_security_group_name = azurerm_network_security_group.privatenetworknsg.name
+}
+
 
 
 // Active FGT Network Interface port1
