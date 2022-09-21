@@ -1,5 +1,5 @@
 resource "azurerm_role_definition" "sdn_connector_ha_role" {
-  name        = "fgt-sdn-connector-ha-role"
+  name        = "var.sdnrolename"
   scope       = "/subscriptions/${var.subscription_id}"
   description = "Custom role for FortiGate SDN Connector HA Failover"
 
