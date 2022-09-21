@@ -110,6 +110,10 @@ variable "passivepipname" {
   default = "passive-mgmt-pip"
   }
 
+variable "sdnrolename" {
+  type = string
+  default = "fgt-sdn-connector-role"
+  }
 
 variable "client1name" {
   type = string

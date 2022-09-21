@@ -24,7 +24,7 @@ Terraform deploys the following components:
 * 2x FortiGate-VM (BYOL/PAYG) instances with three NICs.  Each FortiGate-VM reside in different availability zones.
 * Untrust interface placed in SD-WAN zone "Underlay".
 * 2x firewall rules - permit outbound, and permit internal.
-* Azure SDN connector using managed identity with reader and network contributor roles. The latter is utilised for SDN connector based HA failover. 
+* Azure SDN connector using managed identity with a least privilege custom role scoped for reader and SDN connector based HA failover. The permitted actions can be clearly seen in sdnrole.tf.
 * 2x Ubuntu 20.04 LTS test client VMs in each workload subnet.
 * UDRs for internal subnet routing table for default routing and inter-subnet routing through active FortiGate (HA is orchestrated by SDN connector)
 * Choose payg or byol in variables - if byol, place .lic files in subfolder "licenses" and define in variables. Use lowercase.

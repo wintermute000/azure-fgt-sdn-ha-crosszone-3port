@@ -175,6 +175,11 @@ resource "azurerm_virtual_machine" "activefgtvm" {
   }
 
   tags = local.common_tags
+
+  depends_on = [
+    azurerm_role_definition.sdn_connector_ha_role,
+  ]
+  
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "activefgtvm_shutdown_schedule" {
@@ -192,15 +197,20 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "activefgtvm_shutdown_sc
   }
 }
 
+# resource "azurerm_role_assignment" "activefgvm_reader_role" {
+#   scope                = "/subscriptions/${var.subscription_id}"
+#   role_definition_name = "Reader"
+#   principal_id         = azurerm_virtual_machine.activefgtvm[0].identity.0.principal_id
+# }
+
+# resource "azurerm_role_assignment" "activefgvm_networkcontributor_role" {
+#   scope                = "/subscriptions/${var.subscription_id}"
+#   role_definition_name = "Network Contributor"
+#   principal_id         = azurerm_virtual_machine.activefgtvm[0].identity.0.principal_id
+# }
+
 resource "azurerm_role_assignment" "activefgvm_reader_role" {
   scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Reader"
+  role_definition_name = azurerm_role_definition.sdn_connector_ha_role.name
   principal_id         = azurerm_virtual_machine.activefgtvm[0].identity.0.principal_id
 }
-
-resource "azurerm_role_assignment" "activefgvm_networkcontributor_role" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Network Contributor"
-  principal_id         = azurerm_virtual_machine.activefgtvm[0].identity.0.principal_id
-}
-

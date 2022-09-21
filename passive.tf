@@ -73,7 +73,7 @@
 
 
 resource "azurerm_virtual_machine" "passivefgtvm" {
-  depends_on                   = [azurerm_virtual_machine.activefgtvm]
+  depends_on                   = [azurerm_virtual_machine.activefgtvm, azurerm_role_definition.sdn_connector_ha_role,]
   count                        = var.custom ? 0 : 1
   name                         = var.passivename
   location                     = var.location
@@ -162,6 +162,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
   }
 
   tags = local.common_tags
+
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "passivefgtvm_shutdown_schedule" {
@@ -179,14 +180,20 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "passivefgtvm_shutdown_s
   }
 }
 
+# resource "azurerm_role_assignment" "passivefgvm_reader_role" {
+#   scope                = "/subscriptions/${var.subscription_id}"
+#   role_definition_name = "Reader"
+#   principal_id         = azurerm_virtual_machine.passivefgtvm[0].identity.0.principal_id
+# }
+
+# resource "azurerm_role_assignment" "passivefgvm_networkcontributor_role" {
+#   scope                = "/subscriptions/${var.subscription_id}"
+#   role_definition_name = "Network Contributor"
+#   principal_id         = azurerm_virtual_machine.passivefgtvm[0].identity.0.principal_id
+# }
+
 resource "azurerm_role_assignment" "passivefgvm_reader_role" {
   scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Reader"
-  principal_id         = azurerm_virtual_machine.passivefgtvm[0].identity.0.principal_id
-}
-
-resource "azurerm_role_assignment" "passivefgvm_networkcontributor_role" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Network Contributor"
+  role_definition_name = azurerm_role_definition.sdn_connector_ha_role.name
   principal_id         = azurerm_virtual_machine.passivefgtvm[0].identity.0.principal_id
 }
