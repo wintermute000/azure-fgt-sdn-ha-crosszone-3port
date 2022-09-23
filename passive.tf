@@ -122,7 +122,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
     admin_password = var.adminpassword
     custom_data = templatefile("${var.bootstrap-passive}", {
       type            = var.license_type
-      license_file    = "${path.module}/licenses/${var.license2}"
+      license_file = var.fgtlicense != "" ? "./licenses/${var.fgtlicense2}" : ""
       passivename      = var.passivename
       port1_ip        = var.passiveport1
       port1_mask      = var.passiveport1mask
@@ -145,6 +145,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
       rsg             = azurerm_resource_group.myterraformgroup.name
       clusterip       = azurerm_public_ip.ClusterPublicIP.name
       routetablename    = azurerm_route_table.private_rt.name
+      fgtflextoken   = var.fgtflextoken2
     })
   }
 

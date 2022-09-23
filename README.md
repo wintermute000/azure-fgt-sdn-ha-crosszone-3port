@@ -27,7 +27,7 @@ Terraform deploys the following components:
 * Azure SDN connector using managed identity with a least privilege custom role scoped for reader and SDN connector based HA failover. The permitted actions can be clearly seen in sdnrole.tf.
 * 2x Ubuntu 20.04 LTS test client VMs in each workload subnet.
 * UDRs for internal subnet routing table for default routing and inter-subnet routing through active FortiGate (HA is orchestrated by SDN connector)
-* Choose payg or byol in variables - if byol, place .lic files in subfolder "licenses" and define in variables. Use lowercase.
+* FortiGate - Choose payg or byol in "license_type" variable (lowercase) - if byol and using license file, place .lic files in subfolder "licenses", define filename in "fgtlicense" / "fgtlicense2" variables and DO NOT populate the "fgtflextoken" variable. If using flex-vm, define token in "fgtflextoken" / "fgtflextoken2" variables and DO NOT populate the "fgtlicense" variable. DO NOT populate a flex token variable if using a license file or vice versa.
 * Choose availability zone or availability set using the availability_zone boolean variable (false will use availability set).
 * Terraform backend (versions.tf) stored in Azure storage - customise backend.conf to suit or modify as appropriate. An backend.conf.example is provided  or comment out the backend "azurerm" resource block to use the default local backend for example.
 
