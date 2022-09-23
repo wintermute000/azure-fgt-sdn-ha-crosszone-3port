@@ -21,7 +21,7 @@ This terraform script supports both availability zones and availablity sets with
 Terraform deploys the following components:
 
 * Azure Virtual Network with 4 subnets - external, internal, 2x workload subnets
-* 2x FortiGate-VM (BYOL/PAYG) instances with three NICs.  Each FortiGate-VM reside in different availability zones.
+* 2x FortiGate-VM (BYOL/PAYG) instances with three NICs.  Each FortiGate-VM reside in different availability zones or uses an availability set.
 * Untrust interface placed in SD-WAN zone "Underlay".
 * 2x firewall rules - permit outbound, and permit internal.
 * Azure SDN connector using managed identity with a least privilege custom role scoped for reader and SDN connector based HA failover. The permitted actions can be clearly seen in sdnrole.tf.
