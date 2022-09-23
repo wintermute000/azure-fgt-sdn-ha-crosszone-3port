@@ -86,15 +86,15 @@ resource "azurerm_image" "custom" {
 
 
 resource "azurerm_virtual_machine" "activefgtvm" {
-  count                        = var.custom ? 0 : 1
-  name                         = var.activename
-  location                     = var.location
-  resource_group_name          = azurerm_resource_group.myterraformgroup.name
-  network_interface_ids        = [azurerm_network_interface.activeport1.id, azurerm_network_interface.activeport2.id, azurerm_network_interface.activeport3.id]
-  primary_network_interface_id = azurerm_network_interface.activeport1.id
-  vm_size                      = var.size
-  zones                        = var.availability_zone ? [var.zone1] : null
-  availability_set_id   = var.availability_zone ? null : azurerm_availability_set.fgt_av_set[0].id
+  count                            = var.custom ? 0 : 1
+  name                             = var.activename
+  location                         = var.location
+  resource_group_name              = azurerm_resource_group.myterraformgroup.name
+  network_interface_ids            = [azurerm_network_interface.activeport1.id, azurerm_network_interface.activeport2.id, azurerm_network_interface.activeport3.id]
+  primary_network_interface_id     = azurerm_network_interface.activeport1.id
+  vm_size                          = var.size
+  zones                            = var.availability_zone ? [var.zone1] : null
+  availability_set_id              = var.availability_zone ? null : azurerm_availability_set.fgt_av_set[0].id
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
 
@@ -135,7 +135,7 @@ resource "azurerm_virtual_machine" "activefgtvm" {
     admin_password = var.adminpassword
     custom_data = templatefile("${var.bootstrap-active}", {
       type            = var.license_type
-      license_file = var.fgtlicense != "" ? "./licenses/${var.fgtlicense}" : ""
+      license_file    = var.fgtlicense != "" ? "./licenses/${var.fgtlicense}" : ""
       activename      = var.activename
       port1_ip        = var.activeport1
       port1_mask      = var.activeport1mask
@@ -146,18 +146,18 @@ resource "azurerm_virtual_machine" "activefgtvm" {
       passive_peerip  = var.passiveport1
       mgmt_gateway_ip = var.port1gateway
       defaultgwy      = var.port2gateway
-      port3gateway      = var.port3gateway
+      port3gateway    = var.port3gateway
       tenant          = var.tenant_id
       subscription    = var.subscription_id
       # clientid        = var.client_id
       # clientsecret    = var.client_certificate_path
-      adminsport      = var.adminsport
-      sshport      = var.sshport
-      vnetcidr = var.vnetcidr
-      port2name = "${var.activename}-port2"
-      rsg             = azurerm_resource_group.myterraformgroup.name
-      clusterip       = azurerm_public_ip.ClusterPublicIP.name
-      routetablename   = azurerm_route_table.private_rt.name
+      adminsport     = var.adminsport
+      sshport        = var.sshport
+      vnetcidr       = var.vnetcidr
+      port2name      = "${var.activename}-port2"
+      rsg            = azurerm_resource_group.myterraformgroup.name
+      clusterip      = azurerm_public_ip.ClusterPublicIP.name
+      routetablename = azurerm_route_table.private_rt.name
       fgtflextoken   = var.fgtflextoken
     })
   }
@@ -171,7 +171,7 @@ resource "azurerm_virtual_machine" "activefgtvm" {
     storage_uri = azurerm_storage_account.fgtstorageaccount.primary_blob_endpoint
   }
 
-  identity  {
+  identity {
     type = "SystemAssigned"
   }
 
@@ -180,7 +180,7 @@ resource "azurerm_virtual_machine" "activefgtvm" {
   depends_on = [
     azurerm_role_definition.sdn_connector_ha_role,
   ]
-  
+
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "activefgtvm_shutdown_schedule" {

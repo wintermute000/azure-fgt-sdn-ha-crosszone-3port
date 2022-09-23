@@ -1,3 +1,3 @@
 locals {
-  common_tags = var.tags 
+  common_tags = var.tags
 } 

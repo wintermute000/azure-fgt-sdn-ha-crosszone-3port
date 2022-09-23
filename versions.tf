@@ -7,7 +7,7 @@ terraform {
       source = "hashicorp/random"
     }
   }
-  
+
   backend "azurerm" {
 
   }

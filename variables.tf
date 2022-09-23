@@ -1,19 +1,19 @@
 // Azure configuration
 variable "subscription_id" {
-    type = string
-    }
+  type = string
+}
 
 variable "client_id" {
   type = string
-    }
+}
 
 variable "client_certificate_path" {
   type = string
-  }
+}
 
 variable "tenant_id" {
   type = string
-  }
+}
 
 //  For HA, choose instance size that support 4 nics at least
 //  Check : https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
@@ -51,79 +51,79 @@ variable "location" {
 }
 
 variable "vnetname" {
-  type = string
+  type    = string
   default = "azhublb-vnet"
-  }
+}
 
 variable "rgname" {
-  type = string
+  type    = string
   default = "azhublb-rg"
-  }
+}
 
 variable "activename" {
-  type = string
+  type    = string
   default = "azhubsdn-fgt1"
-  }
+}
 
 variable "passivename" {
-  type = string
+  type    = string
   default = "azhubsdn-fgt2"
-  }
+}
 
 variable "publicsubnetname" {
-  type = string
+  type    = string
   default = "ext-subnet"
-  }
+}
 
 variable "private1subnetname" {
-  type = string
+  type    = string
   default = "int-subnet"
-  }
+}
 
 variable "private2subnetname" {
-  type = string
+  type    = string
   default = "workload1-subnet"
-  }
+}
 
 variable "private3subnetname" {
-  type = string
+  type    = string
   default = "workload2-subnet"
-  }
+}
 
 variable "hamgmtsubnetname" {
-  type = string
+  type    = string
   default = "hamgmt-subnet"
-  }
+}
 
 variable "clusterpip1name" {
-  type = string
+  type    = string
   default = "cluster1-pip"
-  }
+}
 
 variable "activepipname" {
-  type = string
+  type    = string
   default = "active-mgmt-pip"
-  }
+}
 
 variable "passivepipname" {
-  type = string
+  type    = string
   default = "passive-mgmt-pip"
-  }
+}
 
 variable "sdnrolename" {
-  type = string
+  type    = string
   default = "fgt-sdn-connector-role"
-  }
+}
 
 variable "client1name" {
-  type = string
+  type    = string
   default = "azhublb-client1"
-  }
+}
 
 variable "client2name" {
-  type = string
+  type    = string
   default = "azhublb-client2"
-  }
+}
 
 // To use custom image uncomment relevant sections in active.tf and passive.tf
 // by default is false
@@ -345,11 +345,11 @@ variable "fgtflextoken2" {
 
 
 variable "tags" {
-  type = map
+  type = map(any)
   default = {
     environment = "dev"
   }
-  }
+}
 
 variable "publicnsg" {
   type = map(map(string))
@@ -383,26 +383,26 @@ variable "privatensg" {
   type = map(map(string))
   default = {
     i100 = {
-    name                       = "ingress"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
+      name                       = "ingress"
+      priority                   = 100
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_range     = "*"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
     }
     e100 = {
-    name                       = "egress"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
+      name                       = "egress"
+      priority                   = 100
+      direction                  = "Outbound"
+      access                     = "Allow"
+      protocol                   = "*"
+      source_port_range          = "*"
+      destination_port_range     = "*"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
     }
   }
 }

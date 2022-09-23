@@ -2,7 +2,7 @@
 #   name                = "private_rt1"
 #   location            = azurerm_resource_group.myterraformgroup.location
 #   resource_group_name = azurerm_resource_group.myterraformgroup.name
-  
+
 #   # route {
 #   #   name           = "internal_subnet"
 #   #   address_prefix = var.private1cidr
@@ -31,18 +31,18 @@ resource "azurerm_route_table" "private_rt" {
   name                = "private_rt"
   location            = azurerm_resource_group.myterraformgroup.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
-  
+
   route {
-    name           = "internal_vnet"
-    address_prefix = var.vnetcidr
-    next_hop_type  = "VirtualAppliance"
+    name                   = "internal_vnet"
+    address_prefix         = var.vnetcidr
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = var.activeport3
   }
 
   route {
-    name           = "internal_default"
-    address_prefix = "0.0.0.0/0"
-    next_hop_type  = "VirtualAppliance"
+    name                   = "internal_default"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = var.activeport3
   }
 
